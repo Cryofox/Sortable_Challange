@@ -47,10 +47,7 @@ class Sortable_Solver:
 				for line in f:
 					listing = json.loads(line)
 
-					#Format Titles for easier CrossReferencing later.
-					listing['title']=self.Format_String(listing['title'],'_',' ');
-					listing['title']=self.Format_String(listing['title'],'-',' ');
-					listing['title']=listing['title'].upper();
+
 
 					#if our dictionary has an entry for this Key
 					if ( listing['manufacturer'] in self.dictionary_Listings ):
@@ -111,12 +108,17 @@ class Sortable_Solver:
 						#Create a List to store the matching Listings
 
 						for item in manufacturer_Listing:
-							if (item['title'].find(name) != -1):
+							#Format Titles for easier CrossReferencing later.
+							title=self.Format_String(item['title'],'_',' ');
+							title=self.Format_String(title,'-',' ');
+							title=title.upper();
+
+							if (title.find(name) != -1):
 								result_ListingMatch.append(item) #Add the Json Object as it matches both manufacterer and name
 
 
 					json_Result = {
-						"product_name": name,
+						"product_name": product['product_name'], #Store Unmodified Name
 						"listings": result_ListingMatch
 					}
 
